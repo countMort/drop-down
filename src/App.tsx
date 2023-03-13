@@ -6,10 +6,15 @@ import React, {
 } from "react"
 import { ListItem } from "./App.model"
 import { startingList } from "./parameters"
+import { useAppClasses } from "./App.style"
+import drop_down_img from "./assets/drop-down-icon.jpg"
 
 export const App = () => {
+  const classes = useAppClasses()
+
   const inputRef = useRef<HTMLInputElement>(null)
   const [list, setList] = useState(startingList)
+  const [isOpen, setIsOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState<ListItem>(null)
 
   const keyStrokeHandler: KeyboardEventHandler = (event) => {
@@ -33,31 +38,47 @@ export const App = () => {
     }
   }
 
-  const blurHandler: FocusEventHandler<HTMLInputElement> = (event) => {
+  const blurHandler: FocusEventHandler = (event) => {
     const target = event.target as HTMLInputElement
     const clearInputCondition =
-      target.value && selectedItem.value !== inputRef.current.value
+      target.value && selectedItem?.value.trim() !== target.value.trim()
+
     if (clearInputCondition) {
-      // Used inputRef.current.value instead of target.value because it's
-      // better not to manipulate the the dom directly.
       inputRef.current.value = ""
       setSelectedItem(null)
     }
+
+    setIsOpen(false)
+  }
+
+  const focusHandler: FocusEventHandler = (event) => {    
+    setIsOpen(true)
+  }
+
+  const listItemClickHandler = (item: ListItem) => {
+    setSelectedItem(item)
+    inputRef.current.value = item.value
+    setIsOpen(false)
   }
 
   return (
     <div style={{ width: "50vw", margin: "auto" }}>
-      <input
-        ref={inputRef}
-        type="text"
-        onKeyDown={keyStrokeHandler}
-        onBlur={blurHandler}
-        style={{ width: "100%", height: "2rem", fontSize: "1.5rem" }}
-      />
-      <div>
-        <ul style={{ listStyle: "none", padding: "0", textAlign: "center" }}>
+      <div className={classes.inputContainer}>
+        <input
+          ref={inputRef}
+          type="text"
+          onKeyDown={keyStrokeHandler}
+          onBlur={blurHandler}
+          onFocus={focusHandler}
+        />
+        <img className={isOpen ? "open" : ""} src={drop_down_img} />
+      </div>
+      <div className={`${classes.listContainer} ${isOpen ? 'open' : ''}`}>
+        <ul>
           {list.map((item) => (
-            <li key={item.value}>{item.text}</li>
+            <li onClick={() => listItemClickHandler(item)} key={item.value}>
+              {item.text}
+            </li>
           ))}
         </ul>
       </div>
