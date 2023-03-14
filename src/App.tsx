@@ -31,7 +31,7 @@ export const App = () => {
         text: value,
         value,
       }
-      setList([...list, item])
+      setList([item, ...list])
       setSelectedItem(item)
     } else {
       setSelectedItem(foundItem)
@@ -51,7 +51,7 @@ export const App = () => {
     setIsOpen(false)
   }
 
-  const focusHandler: FocusEventHandler = (event) => {    
+  const focusHandler: FocusEventHandler = (event) => {
     setIsOpen(true)
   }
 
@@ -61,9 +61,18 @@ export const App = () => {
     setIsOpen(false)
   }
 
+  // const toggleDropDown = (forcedValue?: boolean) => {
+  //   if (forcedValue !== undefined) {
+  //     setIsOpen(forcedValue)
+  //   } else {
+  //     setIsOpen((value) => !value)
+  //   }
+  // }
+
   return (
     <div style={{ width: "50vw", margin: "auto" }}>
-      <div className={classes.inputContainer}>
+      <div className={`${classes.inputContainer} ${isOpen ? "open" : ""}`}>
+        {/* Probaply can unify open class on the above div and lower one for list, should check that later */}
         <input
           ref={inputRef}
           type="text"
@@ -73,10 +82,14 @@ export const App = () => {
         />
         <img className={isOpen ? "open" : ""} src={drop_down_img} />
       </div>
-      <div className={`${classes.listContainer} ${isOpen ? 'open' : ''}`}>
+      <div className={`${classes.listContainer} ${isOpen ? "open" : ""}`}>
         <ul>
           {list.map((item) => (
-            <li onClick={() => listItemClickHandler(item)} key={item.value}>
+            <li
+              onClick={() => listItemClickHandler(item)}
+              key={item.value}
+              className={selectedItem === item ? 'selected' : ''}
+            >
               {item.text}
             </li>
           ))}

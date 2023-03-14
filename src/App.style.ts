@@ -1,22 +1,36 @@
 import { createUseStyles } from "react-jss"
-
-const transitionDelay = "0.2s"
+import {
+  transitionDelay,
+  transitionDuration,
+  primary,
+  alphaPrimary,
+  fontSize,
+} from "./parameters"
 
 export const useAppClasses = createUseStyles({
   listContainer: {
+    fontSize,
     maxHeight: 0,
-    overflow: "hidden",
-    transition: `max-height 0.3s ${transitionDelay}`,
+    overflow: "auto",
+    transition: `max-height ${transitionDuration} ${transitionDelay}`,
     zIndex: 2,
     position: "relative",
     "&.open": {
-      maxHeight: "8rem",
-      overflow: "auto",
+      maxHeight: "12rem",
+      transitionDelay: 0,
+    },
+    "& ul": {
+      padding: 0
     },
     "& li": {
       listStyle: "none",
-      padding: "none",
-      textAlign: "center",
+      padding: "0.4rem 1rem",
+      borderRadius: "0.3rem",
+      "&:hover,&.selected": {
+        cursor: "pointer",
+        background: alphaPrimary(0.05),
+        color: primary,
+      },
     },
     "&::-webkit-scrollbar": {
       width: "0.2rem",
@@ -45,7 +59,28 @@ export const useAppClasses = createUseStyles({
   },
   inputContainer: {
     display: "flex",
-    "& input": { width: "100%", height: "2rem", fontSize: "1.5rem" },
+    transitionProperty: "box-shadow,border",
+    transitionDelay,
+    transitionDuration,
+    border: `1px solid`,
+    borderColor: alphaPrimary(0),
+    borderRadius: "0.5rem",
+    padding: "0 0.5rem",
+    "&.open": {
+      borderColor: primary,
+      transitionDelay: 0,
+      boxShadow: `0px 0px 1px 2px ${alphaPrimary(0.2)};`,
+      WebkitBoxShadow: `0px 0px 1px 2px ${alphaPrimary(0.2)};`,
+      // outline: `2px solid ${alphaPrimary(0.2)}`
+    },
+    "& input": {
+      fontSize,
+      borderRadius: "inherit",
+      width: "100%",
+      height: "2rem",
+      border: "none",
+      outline: "none",
+    },
     "& img": {
       height: "0.5rem",
       margin: {
@@ -53,7 +88,9 @@ export const useAppClasses = createUseStyles({
         top: "auto",
         bottom: "auto",
       },
-      transition: `transform 0.2s ${transitionDelay}`,
+      transitionProperty: "transform",
+      transitionDelay: "inherit",
+      transitionDuration: "inherit",
     },
     "& img.open": {
       transform: "rotate(180deg)",
