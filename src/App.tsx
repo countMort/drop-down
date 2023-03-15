@@ -7,7 +7,8 @@ import React, {
 import { ListItem } from "./App.model"
 import { startingList } from "./parameters"
 import { useAppClasses } from "./App.style"
-import drop_down_img from "./assets/drop-down-icon.jpg"
+import drop_down_img from "./assets/drop-down-icon.svg"
+import check_img from "./assets/check-icon.svg"
 
 export const App = () => {
   const classes = useAppClasses()
@@ -77,8 +78,8 @@ export const App = () => {
           ref={inputRef}
           type="text"
           onKeyDown={keyStrokeHandler}
-          onBlur={blurHandler}
           onFocus={focusHandler}
+          onBlur={blurHandler}
         />
         <img className={isOpen ? "open" : ""} src={drop_down_img} />
       </div>
@@ -91,6 +92,7 @@ export const App = () => {
               className={selectedItem === item ? 'selected' : ''}
             >
               {item.text}
+              {selectedItem === item && <img src={check_img}></img>}
             </li>
           ))}
         </ul>

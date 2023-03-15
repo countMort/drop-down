@@ -23,14 +23,22 @@ export const useAppClasses = createUseStyles({
       padding: 0
     },
     "& li": {
+      display: "flex",
+      alignItems: "center",
+      height: "2rem",
+      boxSizing: "content-box",
       listStyle: "none",
       padding: "0.4rem 1rem",
       borderRadius: "0.3rem",
+      justifyContent: "space-between",
       "&:hover,&.selected": {
         cursor: "pointer",
         background: alphaPrimary(0.05),
         color: primary,
       },
+      "& img": {
+        width: '2rem;'
+      }
     },
     "&::-webkit-scrollbar": {
       width: "0.2rem",
@@ -62,8 +70,7 @@ export const useAppClasses = createUseStyles({
     transitionProperty: "box-shadow,border",
     transitionDelay,
     transitionDuration,
-    border: `1px solid`,
-    borderColor: alphaPrimary(0),
+    border: `1px solid black`,
     borderRadius: "0.5rem",
     padding: "0 0.5rem",
     "&.open": {
@@ -82,7 +89,7 @@ export const useAppClasses = createUseStyles({
       outline: "none",
     },
     "& img": {
-      height: "0.5rem",
+      width: "1rem",
       margin: {
         left: "0.5rem",
         top: "auto",
