@@ -4,5 +4,5 @@ export const primary = "rgba(77,101,198)"
 export const alphaPrimary = (alpha: number) => {
   return `${primary.slice(0, primary.length - 1)},${alpha})`
 }
-export const fontSize = "20px"
+export const fontSize = "1.2rem"
 export const inputHeight = "2rem"
