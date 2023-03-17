@@ -1,22 +1,17 @@
 import React, { useCallback, useEffect, useRef } from "react"
 import { scrollToElement } from "../utils"
-import { ListItem } from "./DropDown.model"
 import check_img from "../assets/check-icon.svg"
 import { ListViewProps } from "./ListView.model"
+import { useListViewClasses } from "./ListView.style"
 
-const ListView = ({
-  selectedItem,
-  setSelectedItem,
-  setInputValue,
+export const ListView = ({
   isOpen,
   items,
+  selectedItem,
+  listItemClickHandler,
 }: ListViewProps) => {
+  const { listViewClass } = useListViewClasses()
   const dropDownRef = useRef<HTMLDivElement>(null)
-
-  const listItemClickHandler = (item: ListItem) => {
-    setSelectedItem(item)
-    setInputValue(() => item.value)
-  }
 
   const scrollToSelected = useCallback(() => {
     if (!selectedItem || !dropDownRef.current) return
@@ -31,10 +26,11 @@ const ListView = ({
   useEffect(() => {
     scrollToSelected()
   }, [scrollToSelected])
+
   return (
     <div
       ref={dropDownRef}
-      className={`${classes.listContainer} ${isOpen ? "open" : ""}`}
+      className={`${listViewClass} ${isOpen ? "open" : ""}`}
     >
       <ul>
         {items.map((item) => (

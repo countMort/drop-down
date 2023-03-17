@@ -12,4 +12,5 @@ export declare interface DropDownProps {
   setSelectedItem: React.Dispatch<
     React.SetStateAction<React.SetStateAction<DropDownProps["selectedItem"]>>
   >
+  className?: React.HTMLAttributes<HTMLDivElement>["className"]
 }

@@ -3,14 +3,16 @@ import { DropDownProps, ListItem } from "./DropDown.model"
 import { useDropDownClasses } from "./DropDown.style"
 import drop_down_img from "../assets/drop-down-icon.svg"
 import { useInput } from "../hooks"
+import { ListView } from "./ListView"
 
-export const DropDown = ({
+const DropDownFunction = ({
   items,
   setItems,
   selectedItem,
   setSelectedItem,
+  className,
 }: DropDownProps) => {
-  const classes = useDropDownClasses()
+  const { dropDownClass, inputContainerClass } = useDropDownClasses()
 
   const [isOpen, setIsOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -30,9 +32,14 @@ export const DropDown = ({
     setIsOpen,
   })
 
+  const listItemClickHandler = (item: ListItem) => {
+    setSelectedItem(item)
+    setInputValue(() => item.value)
+  }
+
   return (
-    <div style={{ width: "50vw", margin: "auto" }}>
-      <div className={`${classes.inputContainer} ${isOpen ? "open" : ""}`}>
+    <div className={`${dropDownClass} ${className}`}>
+      <div className={`${inputContainerClass} ${isOpen ? "open" : ""}`}>
         {/* Probaply can unify open class on the above div and lower one for list, should check that later */}
         <input
           ref={inputRef}
@@ -50,6 +57,18 @@ export const DropDown = ({
           onClick={() => inputRef.current?.focus()}
         />
       </div>
+      <ListView
+        isOpen={isOpen}
+        items={items}
+        selectedItem={selectedItem}
+        listItemClickHandler={listItemClickHandler}
+      ></ListView>
     </div>
   )
 }
+
+/**
+ * Not neccesary for this project tho because all of the project's
+ * states are related to this component
+ */
+export const DropDown = React.memo(DropDownFunction)

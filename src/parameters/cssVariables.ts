@@ -5,3 +5,4 @@ export const alphaPrimary = (alpha: number) => {
   return `${primary.slice(0, primary.length - 1)},${alpha})`
 }
 export const fontSize = "20px"
+export const inputHeight = "2rem"
