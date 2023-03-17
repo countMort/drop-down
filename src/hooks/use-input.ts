@@ -6,7 +6,7 @@ import {
   useState,
 } from "react"
 import { findItemInList } from "../utils"
-import { UseInputProps } from "./drop-down.model"
+import { UseInputProps } from "./use-input.model"
 
 export const useInput = ({
   setItems,
@@ -17,6 +17,13 @@ export const useInput = ({
 }: UseInputProps) => {
   const [inputValue, setInputValue] = useState("")
 
+  /**
+   * Given the value, checks if it exists between
+   * the previous items or not.
+   * If it did, selects the item in the list.
+   * If not, creates and adds the item to the list and selects it and then
+   * blurs the input to close it.
+   */
   const submitNewValue = useCallback(
     (value: string, target: HTMLInputElement) => {
       if (!value.trim()) return
@@ -37,6 +44,9 @@ export const useInput = ({
     [items]
   )
 
+  /**
+   * Runs submitNewValue function with input value on pressing Enter.
+   */
   const keyStrokeHandler: KeyboardEventHandler = useCallback(
     (event) => {
       const target = event.target as HTMLInputElement
@@ -49,7 +59,9 @@ export const useInput = ({
   )
 
   /**
-   * I could combine ketStrokeHandler with this function
+   * On input changes, updates its value and if the value
+   * existed in the list, selects it.
+   * I could've combined keyStrokeHandler with this function
    * but I tot they actiually have different purposes
    * and might be a bad idea regarding future developments.
    */
@@ -68,17 +80,17 @@ export const useInput = ({
     [selectedItem]
   )
 
+  /**
+   * On input blur, if no value had been selected,
+   * clears the input to inform the user that no value is selected.
+   * then closes the list.
+   */
   const blurHandler: FocusEventHandler = useCallback(
     (event) => {
       const target = event.target as HTMLInputElement
-      const clearInputCondition =
-        target.value &&
-        selectedItem?.value.trim().toLocaleLowerCase() !==
-          target.value.trim().toLocaleLowerCase()
 
-      if (clearInputCondition) {
+      if (target.value && !selectedItem) {
         setInputValue(() => "")
-        setSelectedItem(null)
       }
 
       setIsOpen(false)
@@ -86,10 +98,18 @@ export const useInput = ({
     [selectedItem]
   )
 
+  /**
+   * Opens the list on input focus.
+   */
   const focusHandler: FocusEventHandler = useCallback((event) => {
     setIsOpen(true)
   }, [])
 
+  /**
+   * Didn't memoised the object because I'm using it's internals with
+   * destruction pattern.
+   * Memoising it can be a better practice for future use though.
+   */
   return {
     inputValue,
     setInputValue,

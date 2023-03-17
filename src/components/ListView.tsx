@@ -13,6 +13,9 @@ export const ListView = ({
   const { listViewClass } = useListViewClasses()
   const dropDownRef = useRef<HTMLDivElement>(null)
 
+  /**
+   * Scrolls the list to show the selected item
+   */
   const scrollToSelected = useCallback(() => {
     if (!selectedItem || !dropDownRef.current) return
 

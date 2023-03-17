@@ -1,3 +1,7 @@
+/**
+ * Checks if the child element is visible
+ * in the current scroll position of the parent or not
+ */
 export const isElementVisible = (parent: HTMLElement, child: HTMLElement) => {
     const parentRect = parent.getBoundingClientRect()
     const parentTop = parentRect.top
@@ -20,6 +24,9 @@ export const isElementVisible = (parent: HTMLElement, child: HTMLElement) => {
     return childBottom <= parentBottom && childTop >= parentTop
   }
   
+  /**
+   * After checking for the element visibility, scrolls to it at false condition.
+   */
   export const scrollToElement = (parent: HTMLElement, child: HTMLElement) => {
     if (!isElementVisible(parent, child)) {
       const offsetTop = child.offsetTop

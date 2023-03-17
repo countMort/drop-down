@@ -32,6 +32,12 @@ const DropDownFunction = ({
     setIsOpen,
   })
 
+  /**
+   * On clicking on a list item,
+   * selects it's coresponding item
+   * and changes the input value to it.
+   * @param item 
+   */
   const listItemClickHandler = (item: ListItem) => {
     setSelectedItem(item)
     setInputValue(() => item.value)
@@ -68,7 +74,7 @@ const DropDownFunction = ({
 }
 
 /**
- * Not neccesary for this project tho because all of the project's
+ * Not neccesary for this project though because all of the projects
  * states are related to this component
  */
 export const DropDown = React.memo(DropDownFunction)
