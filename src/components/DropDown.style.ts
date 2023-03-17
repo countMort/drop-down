@@ -5,22 +5,31 @@ import {
   primary,
   alphaPrimary,
   fontSize,
-} from "./parameters"
+} from "../parameters"
 
-export const useAppClasses = createUseStyles({
+export const useDropDownClasses = createUseStyles({
   listContainer: {
     fontSize,
     maxHeight: 0,
     overflow: "auto",
-    transition: `max-height ${transitionDuration} ${transitionDelay}`,
+    transitionDuration,
+    transitionDelay,
+    transitionProperty: "max-height , border, box-shadow",
+    border: "1px solid transparent",
+    borderRadius: "1rem",
+    marginTop: "1rem",
     zIndex: 2,
     position: "relative",
     "&.open": {
       maxHeight: "12rem",
       transitionDelay: 0,
+      border: "1px solid rgb(235, 235, 235)",
+      boxShadow: "0px 2px 6px 0px rgba(220,220,220, 1)",
+      WebkitBoxShadow: "0px 2px 6px 0px rgba(220,220,220, 1)"
     },
     "& ul": {
-      padding: 0
+      padding: 0,
+      margin: 0,
     },
     "& li": {
       display: "flex",
@@ -37,14 +46,16 @@ export const useAppClasses = createUseStyles({
         color: primary,
       },
       "& img": {
-        width: '2rem;'
-      }
+        width: "2rem;",
+      },
     },
     "&::-webkit-scrollbar": {
       width: "0.2rem",
     },
     "&::-webkit-scrollbar-track": {
       background: "#f1f1f1",
+      marginTop: "1rem",
+      marginBottom: "1rem",
     },
     "&::-webkit-scrollbar-thumb": {
       background: "#888",
@@ -52,18 +63,6 @@ export const useAppClasses = createUseStyles({
     "&::-webkit-scrollbar-thumb:hover": {
       background: "#555",
     },
-    // color: "green",
-    // margin: {
-    //   // jss-expand gives more readable syntax
-    //   top: 5, // jss-default-unit makes this 5px
-    //   right: 0,
-    //   bottom: 0,
-    //   left: "1rem",
-    // },
-    // "& span": {
-    //   // jss-nested applies this to a child span
-    //   fontWeight: "bold", // jss-camel-case turns this into 'font-weight'
-    // },
   },
   inputContainer: {
     display: "flex",
@@ -78,7 +77,6 @@ export const useAppClasses = createUseStyles({
       transitionDelay: 0,
       boxShadow: `0px 0px 1px 2px ${alphaPrimary(0.2)};`,
       WebkitBoxShadow: `0px 0px 1px 2px ${alphaPrimary(0.2)};`,
-      // outline: `2px solid ${alphaPrimary(0.2)}`
     },
     "& input": {
       fontSize,

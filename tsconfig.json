@@ -8,6 +8,10 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": true,
   }
 }
